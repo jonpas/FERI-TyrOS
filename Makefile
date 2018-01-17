@@ -18,19 +18,19 @@ IMG = $(BIN)/main.img
 
 all: $(IMG)
 
-$(IMG): $(ELF)
-    @echo " GRUB $<"
-    @cp '$<' '$(BOOT)'
-    @$(GRUB) -o '$@' $(GRUBFLAGS)
-
 $(ELF): \
         $(patsubst %.c, %.o, $(wildcard $(SRC)/*.c)) \
         $(patsubst %.asm, %.o, $(wildcard $(SRC)/*.asm))
-    @echo " LINK $<"
-    @$(LINK) -o '$(ELF)' $(LINKFLAGS) $^
+    @mkdir -p $(BIN)
+    @echo " LINK $@"
+    @$(LINK) -o $(ELF) $(LINKFLAGS) $^
+
+$(IMG): $(ELF)
+    @echo " GRUB $@"
+    @cp '$<' '$(BOOT)'
+    @$(GRUB) -o $@ $(GRUBFLAGS)
 
 $(SRC)/%.o: $(SRC)/%.c
-    @mkdir -p $(BIN)
     @echo "  CC  $<"
     @$(CC) $(CFLAGS) -o '$@' -c '$<' $(CLIBS)
 
