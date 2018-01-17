@@ -1,7 +1,6 @@
 ENTRY(start)
 SECTIONS
 {
-
     .mbheader 0x100000 :
     {
         *(.mbheader)
