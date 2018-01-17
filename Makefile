@@ -16,8 +16,6 @@ BOOT = iso/boot
 ELF = $(BIN)/main.elf
 IMG = $(BIN)/main.img
 
-OBJS := $(foreach IN_EXT, .c .asm, $(patsubst %$(IN_EXT), %.o, $(wildcard $(SRC)/*$(IN_EXT)))) $(SRC)/boot.o
-
 all: $(IMG)
 
 $(IMG): $(ELF)
@@ -25,7 +23,9 @@ $(IMG): $(ELF)
     @cp '$<' '$(BOOT)'
     @$(GRUB) -o '$@' $(GRUBFLAGS)
 
-$(ELF): $(OBJS)
+$(ELF): \
+        $(patsubst %.c, %.o, $(wildcard $(SRC)/*.c)) \
+        $(patsubst %.asm, %.o, $(wildcard $(SRC)/*.asm))
     @echo " LINK $<"
     @$(LINK) -o '$(ELF)' $(LINKFLAGS) $^
 
