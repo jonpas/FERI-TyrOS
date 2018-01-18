@@ -50,8 +50,8 @@ clean:
     rm -rf $(BIN) $(SRC)/*.o $(BOOT)/*.elf
 
 debug: $(IMG)
-    qemu-system-i386 -hda '$<' -S -s &
-    @gdb $(ELF) -x gdb.gdb
+    qemu-system-i386 -drive file=$<,format=raw -S -s &
+    gdb $(ELF) -x gdb.gdb
 
 qemu: $(IMG)
     qemu-system-i386 -drive file=$<,format=raw

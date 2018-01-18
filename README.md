@@ -28,3 +28,5 @@ $ make clean    # Clean build files
 - [James Molloy's Kernel Development Tutorials](http://www.jamesmolloy.co.uk/tutorial_html/index.html)
 - [James Molloy's Kernel Development Tutorials (Improved Source)](https://github.com/cirosantilli/jamesmolloy-kernel-development-tutorials)
 - [James Molloy's Tutorial Known Bugs](http://wiki.osdev.org/James_Molloy%27s_Tutorial_Known_Bugs)
+- [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/Docs/gettingstarted.htm)
+- [Writing a Simple Operating System - from Scratch](http://www.cs.bham.ac.uk/%7Eexr/lectures/opsys/10_11/lectures/os-dev.pdf)
