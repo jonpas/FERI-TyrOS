@@ -101,7 +101,7 @@ static uchar lalt = 0;
 static uchar ralt = 0;
 static uchar ctrl = 0;
 static uchar capslock = 0;
-static uchar input_buffer[INPUT_BUFFER_LEN] = {0};
+static char input_buffer[INPUT_BUFFER_LEN] = {0};
 
 static void keyboard_handler(registers_t regs) {
     // Read from keyboard's data buffer
@@ -143,12 +143,14 @@ static void keyboard_handler(registers_t regs) {
             // Interpret current input
             if (ascii == ENT) {
                 // Interpret commands
-                if (strcmp((char *)input_buffer, "sysinfo") == 0) {
+                if (strcmp(input_buffer, "sysinfo") == 0) {
                     monitor_write("OS: ");
                     monitor_write(OS_NAME);
                     monitor_write(" (");
                     monitor_write_hex(0x547972);
                     monitor_write(")\nArch: x86\n");
+                } else if (strcmp(input_buffer, "clear") == 0) {
+                    monitor_clear();
                 }
 
                 memset(input_buffer, 0, sizeof(input_buffer));
@@ -157,7 +159,7 @@ static void keyboard_handler(registers_t regs) {
             } else {
                 // Gather ASCII codes into buffer for command interpretation
                 char asciistr[2] = {ascii, '\0'};
-                strcat((char *)input_buffer, asciistr);
+                strcat(input_buffer, asciistr);
             }
         }
     }
