@@ -4,6 +4,9 @@
 
 #include "common.h"
 
+// Enables the cursor and clears the screen
+void init_monitor();
+
 // Clears the screen
 void monitor_clear();
 
