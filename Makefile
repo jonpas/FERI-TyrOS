@@ -4,7 +4,7 @@
 BIN = bin
 SRC = src
 CC = gcc
-CFLAGS = -Wall -Wno-main -fno-builtin -fno-stack-protector -m32 -nostdlib -nostdinc -std=gnu99 -ggdb3
+CFLAGS = -Wall -ffreestanding -m32 -std=gnu99 -ggdb3
 LINK = ld
 LINKFLAGS = -melf_i386 -Tlink.ld
 CASM = nasm

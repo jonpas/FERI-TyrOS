@@ -107,9 +107,55 @@ void monitor_write(char *c) {
 }
 
 void monitor_write_hex(u32int n) {
-    // TODO Implement
+    s32int tmp;
+    monitor_write("0x");
+
+    char noZeroes = 1;
+    for (int i = 28; i > 0; i -= 4) {
+        tmp = (n >> i) & 0xF;
+        if (tmp == 0 && noZeroes != 0) {
+            continue;
+        }
+
+        noZeroes = 0;
+        if (tmp >= 0xA) {
+            monitor_put(tmp - 0xA + 'A');
+        } else {
+            monitor_put(tmp + '0');
+        }
+    }
+
+    tmp = n & 0xF;
+    if (tmp >= 0xA) {
+        monitor_put(tmp - 0xA + 'A');
+    } else {
+        monitor_put(tmp + '0');
+    }
 }
 
 void monitor_write_dec(u32int n) {
-    // TODO Implement
+    if (n == 0) {
+        monitor_put('0');
+        return;
+    }
+
+    char c[32];
+
+    s32int acc = n;
+    int i = 0;
+    while (acc > 0) {
+        c[i] = '0' + acc%10;
+        acc /= 10;
+        ++i;
+    }
+    c[i] = 0;
+
+    char c2[32];
+    c2[i--] = 0;
+    int j = 0;
+    while(i >= 0) {
+        c2[i--] = c[j++];
+    }
+
+    monitor_write(c2);
 }

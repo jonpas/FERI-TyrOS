@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <stddef.h>
+
 // typedefs to standardise sizes across platforms, written for 32-bit x86
 typedef unsigned int   u32int;
 typedef          int   s32int;
