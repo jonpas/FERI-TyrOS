@@ -20,17 +20,6 @@ static void move_cursor() {
     outb(0x3D5, cursor_loc);        // Send the low cursor byte
 }
 
-void init_monitor() {
-    // If timeout in GRUB is disabled, cursor will also be disabled
-    // Enable the cursor either way for consistency
-    outb(0x3D4, 0x0A);  // Tell the VGA board to enable high scanline
-    outb(0x3D5, 14);    // Send the high scanline byte
-    outb(0x3D4, 0x0B);  // Tell the VGA board to enable low scanline
-    outb(0x3D5, 15);    // Send the low scanline byte
-
-    monitor_clear();
-}
-
 // Scrolls the text on the screen up by one line
 static void scroll() {
     // Get a space character with the default colour attributes
@@ -51,6 +40,17 @@ static void scroll() {
         // Cursor should now be on the last line
         cursor_y = 24;
     }
+}
+
+void init_monitor() {
+    // If timeout in GRUB is disabled, cursor will also be disabled
+    // Enable the cursor either way for consistency
+    outb(0x3D4, 0x0A);  // Tell the VGA board to enable high scanline
+    outb(0x3D5, 14);    // Send the high scanline byte
+    outb(0x3D4, 0x0B);  // Tell the VGA board to enable low scanline
+    outb(0x3D5, 15);    // Send the low scanline byte
+
+    monitor_clear();
 }
 
 // Copies spaces to framebuffer to clear the monitor

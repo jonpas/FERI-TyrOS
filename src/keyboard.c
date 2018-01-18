@@ -85,6 +85,15 @@ static uchar kbdus[128][2] = {
     { '+', '+' },
     {   0, 0   },
     {ADOW, ADOW},
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
+    {   0, 0   },
 };
 
 static uchar shift = 0;
@@ -135,10 +144,16 @@ static void keyboard_handler(registers_t regs) {
             if (ascii == ENT) {
                 // Interpret commands
                 if (strcmp((char *)input_buffer, "sysinfo") == 0) {
-                    monitor_write("OS: TyrOS x86\n");
+                    monitor_write("OS: ");
+                    monitor_write(OS_NAME);
+                    monitor_write(" (");
+                    monitor_write_hex(0x547972);
+                    monitor_write(")\nArch: x86\n");
                 }
 
                 memset(input_buffer, 0, sizeof(input_buffer));
+
+                monitor_write("$ ");
             } else {
                 // Gather ASCII codes into buffer for command interpretation
                 char asciistr[2] = {ascii, '\0'};

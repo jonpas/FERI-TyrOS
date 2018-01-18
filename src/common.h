@@ -2,6 +2,9 @@
 
 #pragma once
 
+#define OS_NAME     "Tyr"
+#define OS_NAME_HEX 0x547972
+
 // PIC constants
 #define IRQ_MASTER_0    31
 #define IRQ_SLAVE_0     40

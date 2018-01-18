@@ -6,18 +6,21 @@
 struct multiboot;
 
 int kernel_main(struct multiboot *mboot_ptr) {
+    // Initialize descriptor tables
     init_descriptor_tables();
 
-    asm volatile("sti"); // Enable interrupts
+    // Enable interrupts (requires descriptor tables)
+    asm volatile("sti");
 
+    // Initialize system parts
     init_timer(50);
     init_keyboard();
     init_monitor();
 
-    monitor_write("Welcome to Tyr (");
-    monitor_write_hex(0x547972);
-    monitor_write("), the one-handed OS!\n");
-
+    // Print welcome message
+    monitor_write("Welcome to ");
+    monitor_write(OS_NAME);
+    monitor_write(", the one-handed OS!\n$ ");
 
     return 0;
 }
