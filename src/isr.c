@@ -1,8 +1,43 @@
 #include "isr.h"
-
-#ifdef DEBUG_ISR
 #include "monitor.h"
-#endif
+
+static char *exception_messages[] = {
+    "Division By Zero",
+    "Debug",
+    "Non Maskable Interrupt",
+    "Breakpoint",
+    "Into Detected Overflow",
+    "Out of Bounds",
+    "Invalid Opcode",
+    "No Coprocessor",
+
+    "Double Fault",
+    "Coprocessor Segment Overrun",
+    "Bad TSS",
+    "Segment Not Present",
+    "Stack Fault",
+    "General Protection Fault",
+    "Page Fault",
+    "Unknown Interrupt",
+
+    "Coprocessor Fault",
+    "Alignment Check",
+    "Machine Check",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved",
+    "Reserved"
+};
 
 isr_t interrupt_handlers[256];
 
@@ -20,7 +55,7 @@ void isr_handler(registers_t regs) {
         handler(regs);
     }
 
-    // Send reset signal in case of IRQ
+    // Send reset signal in case of IRQ, halt system in case of fault
     if (regs.int_no >= IRQ_MASTER_0) {
         // Send reset signal to slave in case of IRQs 8-15
         if (regs.int_no >= IRQ_SLAVE_0) {
@@ -29,6 +64,11 @@ void isr_handler(registers_t regs) {
 
         // Send reset signal to master
         outb(PIC_MASTER_CMD, PIC_CMD_RESET);
+    } else {
+        //
+        monitor_write(exception_messages[regs.int_no]);
+        monitor_write("Exception! System halted!\n");
+        while (1); // Halt
     }
 }
 
