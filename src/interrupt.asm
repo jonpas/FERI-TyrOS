@@ -1,4 +1,6 @@
-; Contains interrupt service routine wrappers.
+; Contains interrupt service routine wrappers
+
+[BITS 32]               ; All instructions 32-bit
 
 ; Macro creating a stub for an ISR which does NOT pass it's own error code (adds a dummy errcode byte)
 %macro ISR_NOERRCODE 1

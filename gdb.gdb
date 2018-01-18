@@ -7,5 +7,5 @@ define hook-stop
     printf "\n"
 end
 
-break main
+break kernel_main
 continue

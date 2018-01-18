@@ -1,4 +1,6 @@
-; Sets up global descriptor table and interrupt descriptor table.
+; Sets up global descriptor table and interrupt descriptor table
+
+[BITS 32]                   ; All instructions 32-bit
 
 [GLOBAL gdt_flush]          ; Make 'gdt_flush' accessible from C
 
