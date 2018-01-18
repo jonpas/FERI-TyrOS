@@ -34,3 +34,9 @@ void init_timer(int frequency) {
     outb(0x40, l);
     outb(0x40, h);
 }
+
+void timer_wait(int ticks) {
+    ulong eticks;
+    eticks = tick + ticks;
+    while(tick < eticks);
+}

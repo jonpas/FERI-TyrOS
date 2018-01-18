@@ -12,9 +12,10 @@
 #define PIC_CMD_RESET   0x20
 
 // typedefs to standardise sizes across platforms, written for 32-bit x86
-typedef unsigned int   uint;
-typedef unsigned short ushort;
-typedef unsigned char  uchar;
+typedef unsigned long   ulong;
+typedef unsigned int    uint;
+typedef unsigned short  ushort;
+typedef unsigned char   uchar;
 
 // Writes a byte out to the specified port
 void outb(ushort port, uchar value);
