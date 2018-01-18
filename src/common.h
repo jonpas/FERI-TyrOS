@@ -2,7 +2,14 @@
 
 #pragma once
 
-#include <stddef.h>
+// PIC constants
+#define IRQ_MASTER_0    31
+#define IRQ_SLAVE_0     40
+#define PIC_MASTER_CMD  0x20
+#define PIC_MASTER_DATA 0x21
+#define PIC_SLAVE_CMD   0xA0
+#define PIC_SLAVE_DATA  0xA1
+#define PIC_CMD_RESET   0x20
 
 // typedefs to standardise sizes across platforms, written for 32-bit x86
 typedef unsigned int   u32int;
@@ -38,4 +45,3 @@ char *strcpy(char *dest, const char *src);
 // Concatenates the NULL-terminated string src onto the end of dest
 // Returns dest
 char *strcat(char *dest, const char *src);
-
