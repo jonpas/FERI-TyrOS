@@ -1,4 +1,4 @@
-// Defines the interface for all PIT-related functions
+// Interface for all PIT-related functions
 
 #pragma once
 
@@ -6,4 +6,5 @@
 
 //#define DEBUG_TIMER
 
-void init_timer(u32int frequency);
+// Registers timer handler and sets desired frequency
+void init_timer(int frequency);

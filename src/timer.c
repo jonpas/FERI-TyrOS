@@ -5,7 +5,7 @@
 #include "monitor.h"
 #endif
 
-u32int tick = 0;
+int tick = 0;
 
 static void timer_handler(registers_t regs) {
     tick++;
@@ -17,15 +17,15 @@ static void timer_handler(registers_t regs) {
 #endif
 }
 
-void init_timer(u32int frequency) {
+void init_timer(int frequency) {
     // Register timer handler
     register_interrupt_handler(IRQ0, &timer_handler);
 
     // Calue we send to PIT is the value to divide its input clock (1193180 Hz) by, to get our required frequency
     // The divisor must be small enough to fit into 16-bits.
-    u32int divisor = 1193180 * frequency;
-    u8int l = (u8int)(divisor & 0xFF);
-    u8int h = (u8int)((divisor>>8) & 0xFF);
+    int divisor = 1193180 * frequency;
+    uchar l = (uchar)(divisor & 0xFF);
+    uchar h = (uchar)((divisor>>8) & 0xFF);
 
     // Send command byte
     outb(0x43, 0x36);

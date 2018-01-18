@@ -26,21 +26,24 @@
 
 typedef struct registers {
     // Data segment selector
-    u32int ds;
+    int ds;
 
     // Pushed by pusha
     // 'useless_value' instead of 'esp', because it has to do with the current stack context, not what was interrupted (proper 'esp' below)
-    u32int edi, esi, ebp, useless_value, ebx, edx, ecx, eax;
+    int edi, esi, ebp, useless_value, ebx, edx, ecx, eax;
 
     // Interrupt number and error code (if applicable)
-    u32int int_no, err_code;
+    int int_no, err_code;
 
     // Pushed by the processor automatically
     // Proper 'esp' here
-    u32int eip, cs, eflags, esp, ss;
+    int eip, cs, eflags, esp, ss;
 } registers_t;
 
 typedef void (*isr_t)(registers_t);
 
 // Registers a handler for interrupts or IRQs
-void register_interrupt_handler(u8int n, isr_t handler);
+void register_interrupt_handler(uchar n, isr_t handler);
+
+// Deregisters a handler for interrupts or IRQs
+void deregister_interrupt_handler(uchar n);

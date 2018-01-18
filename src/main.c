@@ -1,6 +1,7 @@
 #include "monitor.h"
 #include "descriptor_tables.h"
 #include "timer.h"
+#include "keyboard.h"
 
 struct multiboot;
 
@@ -17,6 +18,7 @@ int kernel_main(struct multiboot *mboot_ptr) {
     asm volatile("int $0x4");
 
     init_timer(50);
+    init_keyboard();
 
     return 0;
 }

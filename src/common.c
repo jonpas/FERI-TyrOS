@@ -1,24 +1,24 @@
 #include "common.h"
 
-void outb(u16int port, u8int value) {
+void outb(ushort port, uchar value) {
     asm volatile("outb %1, %0" : : "dN" (port), "a" (value));
 }
 
-u8int inb(u16int port) {
-    u8int ret;
+uchar inb(ushort port) {
+    uchar ret;
     asm volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
     return ret;
 }
 
-u16int inw(u16int port) {
-    u16int ret;
+ushort inw(ushort port) {
+    ushort ret;
     asm volatile("inw %1, %0" : "=a" (ret) : "dN" (port));
     return ret;
 }
 
-void memcpy(u8int *dest, const u8int *src, u32int len) {
-    const u8int *sp = (const u8int *)src;
-    u8int *dp = (u8int *)dest;
+void memcpy(uchar *dest, const uchar *src, int len) {
+    const uchar *sp = (const uchar *)src;
+    uchar *dp = (uchar *)dest;
 
     while (len != 0) {
         *dp++ = *sp++;
@@ -26,13 +26,19 @@ void memcpy(u8int *dest, const u8int *src, u32int len) {
     }
 }
 
-void memset(u8int *dest, u8int val, u32int len) {
-    u8int *temp = (u8int *)dest;
+void memset(void *dest, uchar val, int len) {
+    uchar *temp = (uchar *)dest;
 
     while (len != 0) {
         *temp++ = val;
         --len;
     }
+}
+
+int strlen(const char *str) {
+    const char *s;
+    for (s = str; *s; ++s);
+    return s - str;
 }
 
 int strcmp(char *str1, char *str2) {
@@ -62,13 +68,6 @@ char *strcpy(char *dest, const char *src) {
 }
 
 char *strcat(char *dest, const char *src) {
-    while (*dest != 0) {
-        *dest = *dest + 1;
-    }
-
-    do {
-        *dest++ = *src++;
-    } while (*src != 0);
-
+    strcpy(dest + strlen(dest), src);
     return dest;
 }
