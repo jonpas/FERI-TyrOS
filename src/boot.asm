@@ -32,11 +32,11 @@ mboot:
 section .text
 
 [GLOBAL start]              ; Kernel entry point
-[EXTERN main]               ; C code entry point
+[EXTERN kernel_main]        ; C code entry point
 
 start:
     ; Load multiboot information
     push    ebx             ; Save mboot information structure
     cli                     ; Disable interrupts
-    call    main            ; Call 'main()' C function
+    call    kernel_main     ; Call 'kernel_main()' C function
     jmp     $               ; Continue loop
