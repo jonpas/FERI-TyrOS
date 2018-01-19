@@ -13,8 +13,12 @@ Týr - Germanic god associated with law and heroic glory in Norse mythology, por
 - Programmable Interval Timer
 - Monitor Interface
 - Keyboard Interface/Driver
-- Paging (rudimentary)
-- Panic (rudimentary)
+- Panic
+- Paging
+- Heap
+- Multitasking
+- User Mode
+- System Call Interface
 
 ### Setup
 

@@ -1,6 +1,8 @@
 #include "descriptor_tables.h"
-#include "paging.h"
 #include "timer.h"
+#include "paging.h"
+#include "syscall.h"
+#include "task.h"
 #include "monitor.h"
 #include "keyboard.h"
 
@@ -15,15 +17,19 @@ int kernel_main(struct multiboot *mboot_ptr) {
 
     // Initialize system parts
     init_timer(50);
-    init_keyboard();
+    //init_paging(); // TODO Fix paging address (implement heap?)
+    init_syscalls();
     init_monitor();
-    init_paging();
+    init_keyboard();
 
     // Print welcome message
     monitor_write("Welcome to ");
     monitor_write(OS_NAME);
     monitor_write(", the one-handed OS!\n$ ");
 
+    // TODO Multitasking
+    //switch_to_user_mode();
+    //syscall_monitor_write("Hello, user world!\n");
 
     // Page fault test
     /*uint *ptr = (uint*)0xA0000000;

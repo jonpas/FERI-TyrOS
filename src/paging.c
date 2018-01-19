@@ -11,18 +11,18 @@ uint nframes;
 // Defined in kheap.c
 extern uint placement_address;
 
-static void paging_handler(registers_t regs) {
+static void paging_handler(registers_t *regs) {
     // Page fault has occurred
     // Read faulting address from CR2 register
     uint faulting_address;
     asm("mov %%cr2, %0" : "=r" (faulting_address));
 
     // Get error details
-    int present     = !(regs.err_code & 0x1);   // Page not present
-    int rw          = regs.err_code & 0x2;      // Write operation
-    int us          = regs.err_code & 0x4;      // Processor was in user-mode
-    int reserved    = regs.err_code & 0x8;      // Overwritten CPU-reserved bits of page entry
-    //int id          = regs.err_code & 0x10;     // Caused by an instruction fetch
+    int present     = !(regs->err_code & 0x1);   // Page not present
+    int rw          = regs->err_code & 0x2;      // Write operation
+    int us          = regs->err_code & 0x4;      // Processor was in user-mode
+    int reserved    = regs->err_code & 0x8;      // Overwritten CPU-reserved bits of page entry
+    //int id          = regs->err_code & 0x10;     // Caused by an instruction fetch
 
     // Print an error message
     monitor_write("Page fault! ( ");

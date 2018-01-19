@@ -43,6 +43,11 @@ isr_t interrupt_handlers[256];
 
 // Called from ASM interrupt handler stub
 void isr_handler(registers_t regs) {
+    // When the processor extends the 8-bit interrupt number to a 32bit value,
+    // it sign-extends, not zero extends, so if the most significant bit (0x80) is set,
+    // regs.int_no will be very large (about 0xffffff80)
+    uchar int_no = regs.int_no & 0xFF;
+
 #ifdef DEBUG_ISR
     monitor_write("recieved interrupt: ");
     monitor_write_dec(regs.int_no);
@@ -50,15 +55,15 @@ void isr_handler(registers_t regs) {
 #endif
 
     // Call interrupt handler if one is registered
-    if (interrupt_handlers[regs.int_no] != 0) {
-        isr_t handler = interrupt_handlers[regs.int_no];
-        handler(regs);
+    if (interrupt_handlers[int_no] != 0) {
+        isr_t handler = interrupt_handlers[int_no];
+        handler(&regs);
     }
 
     // Send reset signal in case of IRQ, halt system in case of fault
-    if (regs.int_no >= IRQ_MASTER_0) {
+    if (int_no >= IRQ_MASTER_0) {
         // Send reset signal to slave in case of IRQs 8-15
-        if (regs.int_no >= IRQ_SLAVE_0) {
+        if (int_no >= IRQ_SLAVE_0) {
             outb(PIC_SLAVE_CMD, PIC_CMD_RESET);
         }
 
@@ -66,7 +71,7 @@ void isr_handler(registers_t regs) {
         outb(PIC_MASTER_CMD, PIC_CMD_RESET);
     } else {
         //
-        monitor_write(exception_messages[regs.int_no]);
+        monitor_write(exception_messages[int_no]);
         monitor_write("Exception! System halted!\n");
         while (1); // Halt
     }

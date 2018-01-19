@@ -4,6 +4,9 @@
 
 #include "common.h"
 
+// Initialization function
+void init_descriptor_tables();
+
 // Value of one GDT entry
 // Aattribute 'packed' for GCC not to change any of the alignment in the structure
 struct gdt_entry_struct {
@@ -21,7 +24,7 @@ typedef struct gdt_entry_struct gdt_entry_t;
 // In format required by 'lgdt' instruction
 struct gdt_ptr_struct {
     ushort limit;           // Upper 16 bits of all selector limits
-    int base;            // Address of the first gdt_entry_t struct
+    int base;               // Address of the first gdt_entry_t struct
 } __attribute__((packed));
 
 typedef struct gdt_ptr_struct gdt_ptr_t;
@@ -41,7 +44,7 @@ typedef struct idt_entry_struct idt_entry_t;
 // In format suitable for 'lidt'
 struct idt_ptr_struct {
     ushort limit;
-    int base;            // Address of the first element in 'idt_entry_t' array
+    int base;               // Address of the first element in 'idt_entry_t' array
 } __attribute__((packed));
 
 typedef struct idt_ptr_struct idt_ptr_t;
@@ -79,6 +82,7 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+extern void isr128();
 
 // IRQ
 extern void isr32();
@@ -99,5 +103,35 @@ extern void isr46();
 extern void isr47();
 extern void isr48();
 
-// Initialization function
-void init_descriptor_tables();
+// Task State Segment
+struct tss_entry_struct {
+    uint prev_tss;        // Previous TSS - in case of hardware task switching this would form a linked list
+    uint esp0;            // Stack pointer to load with change to kernel mode
+    uint ss0;             // Stack segment to load with change to kernel mode
+    uint esp1;            // Unused
+    uint ss1;
+    uint esp2;
+    uint ss2;
+    uint cr3;
+    uint eip;
+    uint eflags;
+    uint eax;
+    uint ecx;
+    uint edx;
+    uint ebx;
+    uint esp;
+    uint ebp;
+    uint esi;
+    uint edi;
+    uint es;              // Value to load into ES with change to kernel mode
+    uint cs;              // Value to load into CS with change to kernel mode
+    uint ss;              // Value to load into SS with change to kernel mode
+    uint ds;              // Value to load into DS with change to kernel mode
+    uint fs;              // Value to load into FS with change to kernel mode
+    uint gs;              // Value to load into GS with change to kernel mode
+    uint ldt;             // Unused
+    ushort trap;
+    ushort iomap_base;
+} __attribute__((packed));
+
+typedef struct tss_entry_struct tss_entry_t;

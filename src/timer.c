@@ -7,7 +7,7 @@
 
 int tick = 0;
 
-static void timer_handler(registers_t regs) {
+static void timer_handler(registers_t *regs) {
     tick++;
 
 #ifdef DEBUG_TIMER

@@ -40,7 +40,7 @@ typedef struct registers {
     int eip, cs, eflags, esp, ss;
 } registers_t;
 
-typedef void (*isr_t)(registers_t);
+typedef void (*isr_t)(registers_t*);
 
 // Registers a handler for interrupts or IRQs
 void register_interrupt_handler(uchar n, isr_t handler);

@@ -103,7 +103,7 @@ static uchar ctrl = 0;
 static uchar capslock = 0;
 static char input_buffer[INPUT_BUFFER_LEN] = {0};
 
-static void keyboard_handler(registers_t regs) {
+static void keyboard_handler(registers_t *regs) {
     // Read from keyboard's data buffer
     uchar scancode = inb(0x60);
 
