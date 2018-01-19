@@ -17,7 +17,7 @@ int kernel_main(struct multiboot *mboot_ptr) {
 
     // Initialize system parts
     init_timer(50);
-    //init_paging(); // TODO Fix paging address (implement heap?)
+    init_paging(); // TODO Fix paging reboot (implement heap?)
     init_syscalls();
     init_monitor();
     init_keyboard();

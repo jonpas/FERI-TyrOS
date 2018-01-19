@@ -36,6 +36,14 @@ static void paging_handler(registers_t *regs) {
     PANIC("Page fault");
 }
 
+static void enable_paging() {
+    // Enable paging by setting PG bit in CR0
+    uint cr0;
+    asm volatile("mov %%cr0, %0": "=r" (cr0));
+    cr0 |= 0x80000000;
+    asm volatile("mov %0, %%cr0":: "r" (cr0));
+}
+
 // Sets a bit in the frame's bitset
 static void set_frame(uint frame_addr) {
     uint frame = frame_addr / 0x1000;
@@ -106,7 +114,7 @@ void free_frame(page_t *page) {
 }
 
 void init_paging() {
-    // Size of physical memory (for now assume it huge, because we get a reboot otherwise)
+    // Size of physical memory (huge for now, because we get a reboot otherwise)
     uint mem_end_page = 0x80000000;
 
     nframes = mem_end_page / 0x1000;
@@ -133,6 +141,7 @@ void init_paging() {
 
     // Enable paging
     switch_page_directory(kernel_directory);
+    enable_paging();
 }
 
 void switch_page_directory(page_directory_t *dir) {
@@ -140,19 +149,6 @@ void switch_page_directory(page_directory_t *dir) {
 
     // Load physical page directory into CR3
     asm volatile("mov %0, %%cr3":: "r" (&dir->tables_physical));
-
-    // Enable 4 MB paging by setting PSE bit in CR4
-    uint cr4;
-    asm volatile("mov %%cr4, %0": "=r"(cr4));
-    cr4 |= 0x00000010;
-    cr4 &= 0xffffffef;
-    asm volatile("mov %0, %%cr4":: "r"(cr4));
-
-    // Enable paging by setting PG bit in CR0
-    uint cr0;
-    asm volatile("mov %%cr0, %0": "=r" (cr0));
-    cr0 |= 0x80000000;
-    asm volatile("mov %0, %%cr0":: "r" (cr0));
 }
 
 page_t *get_page(uint address, int make, page_directory_t *dir) {

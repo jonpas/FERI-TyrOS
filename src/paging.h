@@ -34,7 +34,7 @@ typedef struct page_directory {
     // Physical address of 'tables_physical'
     // When kernel heap gets allocated and the directory may be in a different location in virtual memory
     uint physical_addr;
-} page_directory_t;
+} __attribute__((aligned(4096))) page_directory_t;
 
 // Allocates a frame
 void alloc_frame(page_t *page, int is_kernel, int is_writeable);
