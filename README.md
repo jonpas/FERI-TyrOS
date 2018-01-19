@@ -33,10 +33,11 @@ $ make clean    # Clean build files
 **Dependencies:**
 - GCC
 - NASM
-- GRUB
+- GRUB2
 - xorriso
-- bochs (with `--with-sdl` - `bochs-sdl` on Ubuntu, `PKGBUILD` edit on Arch Linux)
-- QEMU (instead of bochs and debugging)
+- x86 (i386) hardware or emulator:
+  - bochs (with `--with-sdl` - `PKGBUILD` edit on Arch Linux, `bochs-sdl` package on Ubuntu)
+  - QEMU
 
 ### Resources
 
