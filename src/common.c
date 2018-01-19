@@ -16,7 +16,7 @@ ushort inw(ushort port) {
     return ret;
 }
 
-void memcpy(uchar *dest, const uchar *src, int len) {
+void memcpy(void *dest, const void *src, int len) {
     const uchar *sp = (const uchar *)src;
     uchar *dp = (uchar *)dest;
 

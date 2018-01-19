@@ -89,7 +89,7 @@ void monitor_put(char c) {
         cursor_y++;
     } else if(c >= ' ') {
         // Handle any other printable character
-        location = video_memory + (cursor_y*80 + cursor_x);
+        location = video_memory + (cursor_y * 80 + cursor_x);
         *location = c | attribute;
         cursor_x++;
     }
@@ -165,6 +165,29 @@ void monitor_write_dec(int n) {
     }
 
     monitor_write(c2);
+}
+
+int monitor_delete() {
+    // Make an attribute byte for the default colours
+    uchar attribute = (0 /*black*/ << 4) | (15 /*white*/ & 0x0F);
+    ushort blank = 0x20 /* space */ | (attribute << 8);
+
+    ushort *location = video_memory + (cursor_y * 80 + cursor_x - 1);
+    uchar *location_char = (uchar *)location;
+
+    // Only if not too far left on first input line ('$ ')
+    if (cursor_x > 1 || *location_char != 0x24) {
+        // Write blank space to current position
+        // Cursor gets moved by keyboard driver
+        *(location + 1) = blank;
+
+        return 0;
+    }
+
+    // Move cursor back to not overwrite '$ '
+    ++cursor_x;
+    move_cursor();
+    return -1;
 }
 
 void monitor_set_color(uchar fgcolor, uchar bgcolor) {

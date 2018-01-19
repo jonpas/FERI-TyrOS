@@ -22,5 +22,9 @@ void monitor_write_hex(int n);
 // Outputs a decimal number to the monitor
 void monitor_write_dec(int n);
 
+// Deletes a character from the monitor, preventing deletion of first input line characters ('$ ')
+// Returns -1 on blocked deletion, 0 otherwise
+int monitor_delete();
+
 // Sets the foreground color and background color
 void monitor_set_color(uchar fgcolor, uchar bgcolor);

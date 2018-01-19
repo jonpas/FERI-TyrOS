@@ -30,7 +30,7 @@ uchar inb(ushort port);
 ushort inw(ushort port);
 
 // Copies len bytes from src to dest
-void memcpy(uchar *dest, const uchar *src, int len);
+void memcpy(void *dest, const void *src, int len);
 
 // Writes len copies of val into dest
 void memset(void *dest, uchar val, int len);

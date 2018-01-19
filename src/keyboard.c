@@ -152,12 +152,21 @@ static void keyboard_handler(registers_t regs) {
                 } else if (strcmp(input_buffer, "clear") == 0) {
                     monitor_clear();
                 }
-
-                memset(input_buffer, 0, sizeof(input_buffer));
-
                 monitor_write("$ ");
+
+                // Clear buffer for next input
+                memset(input_buffer, 0, sizeof(input_buffer));
+            } else if (ascii == BKSP) {
+                // Try to delete last inputted character
+                if (monitor_delete() != -1) {
+                    // Delete last character from input buffer
+                    char tmp[INPUT_BUFFER_LEN] = {0};
+                    memcpy(tmp, input_buffer, strlen(input_buffer) - 1);
+                    memset(input_buffer, 0, sizeof(input_buffer));
+                    strcpy(input_buffer, tmp);
+                }
             } else {
-                // Gather ASCII codes into buffer for command interpretation
+                // Buffer ASCII codes for command interpetation on Enter
                 char asciistr[2] = {ascii, '\0'};
                 strcat(input_buffer, asciistr);
             }
