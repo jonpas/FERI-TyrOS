@@ -26,18 +26,10 @@ static void paging_handler(registers_t regs) {
 
     // Print an error message
     monitor_write("Page fault! ( ");
-    if (present) {
-        monitor_write("present ");
-    }
-    if (rw) {
-        monitor_write("read-only ");
-    }
-    if (us) {
-        monitor_write("user-mode ");
-    }
-    if (reserved) {
-        monitor_write("reserved ");
-    }
+    if (present)    { monitor_write("present ");   }
+    if (rw)         { monitor_write("read-only "); }
+    if (us)         { monitor_write("user-mode "); }
+    if (reserved)   { monitor_write("reserved  "); }
     monitor_write(") at ");
     monitor_write_hex(faulting_address);
     monitor_write("\n");
@@ -137,7 +129,7 @@ void init_paging() {
     }
 
     // Register page fault handler
-    register_interrupt_handler(14, paging_handler);
+    register_interrupt_handler(14, &paging_handler);
 
     // Enable paging
     switch_page_directory(kernel_directory);

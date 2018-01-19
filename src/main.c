@@ -25,8 +25,8 @@ int kernel_main(struct multiboot *mboot_ptr) {
     monitor_write(", the one-handed OS!\n$ ");
 
 
-    /* Page fault test
-    uint *ptr = (uint*)0xA0000000;
+    // Page fault test
+    /*uint *ptr = (uint*)0xA0000000;
     uint do_page_fault = *ptr;
     */
 

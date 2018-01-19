@@ -27,7 +27,7 @@ void init_descriptor_tables() {
     // Initialize interrupt descriptor table
     init_idt();
 
-    // Nullify all the interrupt handlers.
+    // Nullify all the interrupt handlers
     memset(&interrupt_handlers, 0, sizeof(isr_t) * 256);
 }
 
@@ -137,6 +137,6 @@ static void idt_set_gate(uchar num, uint base, ushort sel, uchar flags) {
     idt_entries[num].sel     = sel;
     idt_entries[num].always0 = 0;
 
-    // Uncomment the OR below when user-mode is implemented, it sets the interrupt gate's privilege level to 3
+    // OR sets the interrupt gate's privilege level to 3
     idt_entries[num].flags   = flags /* | 0x60 */;
 }
