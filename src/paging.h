@@ -6,6 +6,8 @@
 #include "isr.h"
 #include "monitor.h"
 
+#define MEM_END_PAGE 0x8000000 // Size of physical memory (hard-coded 128 MB)
+
 // Macros for bitset algorithms
 #define INDEX_FROM_BIT(a) (a / (8 * 4))
 #define OFFSET_FROM_BIT(a) (a % (8 * 4))

@@ -1,6 +1,7 @@
 #include "descriptor_tables.h"
 #include "timer.h"
 #include "paging.h"
+#include "kheap.h"
 #include "syscall.h"
 #include "task.h"
 #include "monitor.h"
@@ -17,7 +18,7 @@ int kernel_main(struct multiboot *mboot_ptr) {
 
     // Initialize system parts
     init_timer(50);
-    init_paging(); // TODO Fix paging reboot (implement heap?)
+    init_paging();
     init_syscalls();
     init_monitor();
     init_keyboard();
@@ -31,8 +32,28 @@ int kernel_main(struct multiboot *mboot_ptr) {
     //switch_to_user_mode();
     //syscall_monitor_write("Hello, user world!\n");
 
+    // Paging and Heap test (comment 'init_paging()' above!)
+    /*
+    uint a = kmalloc(8);
+    init_paging();
+    uint b = kmalloc(8);
+    uint c = kmalloc(8);
+    monitor_write("a: ");
+    monitor_write_hex(a);
+    monitor_write(", b: ");
+    monitor_write_hex(b);
+    monitor_write("\nc: ");
+    monitor_write_hex(c);
+    kfree((void *)(uintptr_t)c);
+    kfree((void *)(uintptr_t)b);
+    uint d = kmalloc(12);
+    monitor_write(", d: ");
+    monitor_write_hex(d);
+    */
+
     // Page fault test
-    /*uint *ptr = (uint*)0xA0000000;
+    /*
+    uint *ptr = (uint*)0xA0000000;
     uint do_page_fault = *ptr;
     */
 

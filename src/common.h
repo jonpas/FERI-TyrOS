@@ -33,6 +33,10 @@ typedef unsigned int    uint;
 typedef unsigned short  ushort;
 typedef unsigned char   uchar;
 
+// typedefs for integer pointers
+typedef long    intptr_t;
+typedef ulong   uintptr_t;
+
 // Writes a byte out to the specified port
 void outb(ushort port, uchar value);
 
