@@ -4,6 +4,18 @@ Operating System project for seminar paper at Operating Systems (slo. Operacijsk
 
 Týr - Germanic god associated with law and heroic glory in Norse mythology, portrayed as **one-handed**.
 
+### Features
+
+- Multiboot (via GRUB2)
+- Global Descriptor Table
+- Interrupt Descriptor Table
+- Interrupt Requests
+- Programmable Interval Timer
+- Monitor Interface
+- Keyboard Interface/Driver
+- Paging (rudimentary)
+- Panic (rudimentary)
+
 ### Setup
 
 ```
