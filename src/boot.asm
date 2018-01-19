@@ -29,6 +29,11 @@ mboot:
     dd  end
     dd  start
 
+; Reserve space for stack
+section .bss align=16
+    resb 8192
+    stack_end:
+
 section .text
 
 [GLOBAL start]              ; Kernel entry point
@@ -38,5 +43,6 @@ start:
     ; Load multiboot information
     push    ebx             ; Save mboot information structure
     cli                     ; Disable interrupts
+    mov     esp, stack_end  ; Set stack pointer to end of stack
     call    kernel_main     ; Call 'kernel_main()' C function
     jmp     $               ; Continue loop

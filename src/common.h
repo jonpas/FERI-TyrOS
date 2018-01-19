@@ -5,6 +5,19 @@
 #define OS_NAME     "Tyr"
 #define OS_NAME_HEX 0x547972
 
+// Unused macros
+#ifdef __GNUC__
+#  define UNUSED(x) UNUSED_ ## x __attribute__((__unused__))
+#else
+#  define UNUSED(x) UNUSED_ ## x
+#endif
+
+#ifdef __GNUC__
+#  define UNUSED_FUNCTION(x) __attribute__((__unused__)) UNUSED_ ## x
+#else
+#  define UNUSED_FUNCTION(x) UNUSED_ ## x
+#endif
+
 // PIC constants
 #define IRQ_MASTER_0    31
 #define IRQ_SLAVE_0     40
@@ -14,7 +27,7 @@
 #define PIC_SLAVE_DATA  0xA1
 #define PIC_CMD_RESET   0x20
 
-// typedefs to standardise sizes across platforms, written for 32-bit x86
+// typedefs for shorter unsigned types
 typedef unsigned long   ulong;
 typedef unsigned int    uint;
 typedef unsigned short  ushort;

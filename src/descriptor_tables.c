@@ -1,4 +1,5 @@
 #include "descriptor_tables.h"
+#include "isr.h"
 
 // Get access to ASM functions from C code
 extern void gdt_flush(uint);
@@ -15,6 +16,9 @@ gdt_ptr_t   gdt_ptr;
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
 
+// Extern the ISR handler array so we can nullify them on startup
+extern isr_t interrupt_handlers[];
+
 // Initialization routine - zeroes all the interrupt service routines, initializes GDT and IDT
 void init_descriptor_tables() {
     // Initialize global descriptor table
@@ -22,6 +26,9 @@ void init_descriptor_tables() {
 
     // Initialize interrupt descriptor table
     init_idt();
+
+    // Nullify all the interrupt handlers.
+    memset(&interrupt_handlers, 0, sizeof(isr_t) * 256);
 }
 
 static void init_gdt() {

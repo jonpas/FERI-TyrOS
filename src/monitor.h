@@ -1,4 +1,4 @@
-// Defines the interface for monitor
+// Interface for monitor
 
 #pragma once
 
@@ -11,10 +11,10 @@ void init_monitor();
 void monitor_clear();
 
 // Writes a single character to the monitor
-void monitor_put(char c);
+void monitor_put(const char c);
 
 // Outputs a null-terminated ASCII string to the monitor
-void monitor_write(char *str);
+void monitor_write(const char *str);
 
 // Outputs a hexadecimal number to the monitor
 void monitor_write_hex(int n);

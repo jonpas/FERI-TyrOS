@@ -69,7 +69,7 @@ void monitor_clear() {
     move_cursor();
 }
 
-void monitor_put(char c) {
+void monitor_put(const char c) {
     // Attribute byte is the top 8 bits of the word we have to send to the VGA board
     ushort attribute = cursor_attr << 8;
     ushort *location;
@@ -106,7 +106,7 @@ void monitor_put(char c) {
     move_cursor();
 }
 
-void monitor_write(char *str) {
+void monitor_write(const char *str) {
     int i = 0;
     while (str[i]) {
         monitor_put(str[i++]);
