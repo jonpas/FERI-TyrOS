@@ -24,7 +24,7 @@ Týr - Germanic god associated with law and heroic glory in Norse mythology, por
 
 ```
 $ make          # Build
-$ make bosch    # Build and run using bosch
+$ make bochs    # Build and run using bochs
 $ make qemu     # Build and run using qemu
 $ make debug    # Build and run using qemu in gdb
 $ make clean    # Clean build files
