@@ -9,7 +9,7 @@
 
 struct multiboot;
 
-int kernel_main(struct multiboot *mboot_ptr) {
+int kmain(struct multiboot *mboot_ptr) {
     // Initialize descriptor tables
     init_descriptor_tables();
 
@@ -30,7 +30,11 @@ int kernel_main(struct multiboot *mboot_ptr) {
 
     // TODO Multitasking
     //switch_to_user_mode();
-    //syscall_monitor_write("Hello, user world!\n");
+
+    // System Call test
+    /*
+    syscall_monitor_write("Hello, user world!\n$ ");
+    */
 
     // Paging and Heap test (comment 'init_paging()' above!)
     /*
@@ -51,7 +55,7 @@ int kernel_main(struct multiboot *mboot_ptr) {
     monitor_write_hex(d);
     */
 
-    // Page fault test
+    // Panic test
     /*
     uint *ptr = (uint*)0xA0000000;
     uint do_page_fault = *ptr;

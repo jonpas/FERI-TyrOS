@@ -158,7 +158,7 @@ static void keyboard_handler(registers_t *regs) {
                 memset(input_buffer, 0, sizeof(input_buffer));
             } else if (ascii == BKSP) {
                 // Try to delete last inputted character
-                if (monitor_delete() != -1) {
+                if (monitor_delete() != -1 && strlen(input_buffer) > 0) {
                     // Delete last character from input buffer
                     char tmp[INPUT_BUFFER_LEN] = {0};
                     memcpy(tmp, input_buffer, strlen(input_buffer) - 1);
