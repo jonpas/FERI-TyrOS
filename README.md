@@ -16,8 +16,8 @@ Týr - Germanic god associated with law and heroic glory in Norse mythology, por
 - Panic
 - Paging
 - Heap
-- Multitasking
-- User Mode
+- Multitasking (partially implemented)
+- User Mode (partially implemented due to Multitasking)
 - System Call Interface
 
 ### Setup
