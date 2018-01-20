@@ -28,7 +28,7 @@ int kmain(struct multiboot *mboot_ptr) {
     monitor_write(OS_NAME);
     monitor_write(", the one-handed OS!\n$ ");
 
-    // TODO Multitasking
+    // TODO Multitasking for proper user mode switching
     //switch_to_user_mode();
 
     // System Call test
